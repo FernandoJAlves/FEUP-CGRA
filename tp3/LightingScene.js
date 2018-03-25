@@ -6,8 +6,8 @@ var BOARD_HEIGHT = 4.0;
 var BOARD_A_DIVISIONS = 30;
 var BOARD_B_DIVISIONS = 100;
 
-var N_SLICES = 6;
-var N_STACKS = 6;
+var N_SLICES = 20;
+var N_STACKS = 8;
 
 class LightingScene extends CGFscene 
 {
@@ -36,10 +36,12 @@ class LightingScene extends CGFscene
 		this.table = new MyTable(this);
 		this.wall = new Plane(this);
 		this.floor = new MyQuad(this);
-		this.prism = new MyPrism(this,N_SLICES,N_STACKS);
 		
 		this.boardA = new Plane(this, BOARD_A_DIVISIONS);
 		this.boardB = new Plane(this, BOARD_B_DIVISIONS);
+
+		this.prism = new MyPrism(this, N_SLICES, N_STACKS);
+		this.cylinder = new MyCylinder(this, N_SLICES, N_STACKS);
 
 		// Materials
 		this.materialDefault = new CGFappearance(this);
@@ -55,26 +57,6 @@ class LightingScene extends CGFscene
 		this.materialB.setDiffuse(0.6,0.6,0.6,1);
 		this.materialB.setSpecular(0.8,0.8,0.8,1);	
 		this.materialB.setShininess(120);
-
-
-		this.materialWood = new CGFappearance(this);
-		this.materialWood.setAmbient(0.5,0.3,0,1);
-		this.materialWood.setDiffuse(0.4,0.2,0,1);
-		this.materialWood.setSpecular(0.5,0.3,0,0.5);	
-		this.materialWood.setShininess(120);
-
-		this.materialFloor = new CGFappearance(this);
-		this.materialFloor.setAmbient(0.2,0.2,0.2,1);
-		this.materialFloor.setDiffuse(0.4,0.4,0.4,1);
-		this.materialFloor.setSpecular(0.2,0.2,0.2,0.5);	
-		this.materialFloor.setShininess(120);
-
-		this.materialMetal = new CGFappearance(this);
-		this.materialMetal.setAmbient(0.2,0.2,0.2,1);
-		this.materialMetal.setDiffuse(0.2,0.2,0.2,1);
-		this.materialMetal.setSpecular(0.8,0.8,0.8,1);	
-		this.materialMetal.setShininess(120);
-
 		
 	};
 
@@ -86,9 +68,8 @@ class LightingScene extends CGFscene
 	initLights() 
 	{
 		//this.setGlobalAmbientLight(0.5,0.5,0.5, 1.0);
-		this.setGlobalAmbientLight(0,0,0, 0);
-
-
+		this.setGlobalAmbientLight(0,0,0, 1.0);
+		
 		// Positions for four lights
 		this.lights[0].setPosition(4, 6, 1, 1);
 		this.lights[0].setVisible(true); // show marker on light position (different from enabled)
@@ -96,35 +77,27 @@ class LightingScene extends CGFscene
 		this.lights[1].setPosition(10.5, 6.0, 1.0, 1.0);
 		this.lights[1].setVisible(true); // show marker on light position (different from enabled)
 
-		this.lights[2].setPosition(10.5,6.0,5.0,1.0);
-		this.lights[1].setVisible(true); // show marker on light position (different from enabled)
-		this.lights[3].setPosition(4, 6.0, 5.0, 1.0);
-		this.lights[1].setVisible(true); // show marker on light position (different from enabled)
+		this.lights[2].setPosition(10.5, 6.0, 5.0, 1.0);
+		this.lights[2].setSpecular(1,1,1,1);
+		/*
+		this.lights[2].glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0);
+		this.lights[2].glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.2);
+  		this.lights[2].glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0);
+		*/
+		this.lights[2].enable();
+
+		//this.lights[1].setVisible(true); // show marker on light position (different from enabled)
+		//this.lights[3].setPosition(4, 6.0, 5.0, 1.0);
+		//this.lights[1].setVisible(true); // show marker on light position (different from enabled)
 
 		this.lights[0].setAmbient(0, 0, 0, 1);
 		this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
-		this.lights[0].setSpecular(1,1,0,1);
+		this.lights[0].setSpecular(1.0, 1.0, 1.0, 1);
 		this.lights[0].enable();
 
 		this.lights[1].setAmbient(0, 0, 0, 1);
 		this.lights[1].setDiffuse(1.0, 1.0, 1.0, 1.0);
 		this.lights[1].enable();
-
-		this.lights[2].setAmbient(0, 0, 0, 1);
-		this.lights[2].setDiffuse(1.0, 1.0, 1.0, 1.0);
-		this.lights[2].setSpecular(1,1,1,1);
-		this.lights[2].setLinearAttenuation(1.0);
-		this.lights[2].setQuadraticAttenuation(0);
-		this.lights[2].setConstantAttenuation(0);
-		this.lights[2].enable();
-
-		this.lights[3].setAmbient(0, 0, 0, 1);
-		this.lights[3].setDiffuse(1.0, 1.0, 1.0, 1.0);
-		this.lights[3].setSpecular(1,1,0,1);
-		this.lights[2].setLinearAttenuation(0);
-		this.lights[2].setQuadraticAttenuation(0.2);
-		this.lights[2].setConstantAttenuation(0);
-		this.lights[3].enable();
 	};
 
 	updateLights() 
@@ -158,16 +131,15 @@ class LightingScene extends CGFscene
 		this.materialDefault.apply();
 
 		// ---- END Background, camera and axis setup
-	
+
 		// ---- BEGIN Scene drawing section
 
-		/*
+
 		// Floor
 		this.pushMatrix();
 			this.translate(7.5, 0, 7.5);
 			this.rotate(-90 * degToRad, 1, 0, 0);
 			this.scale(15, 15, 0.2);
-			this.materialFloor.apply();
 			this.floor.display();
 		this.popMatrix();
 
@@ -176,7 +148,6 @@ class LightingScene extends CGFscene
 			this.translate(0, 4, 7.5);
 			this.rotate(90 * degToRad, 0, 1, 0);
 			this.scale(15, 8, 0.2);
-			this.materialWood.apply();
 			this.wall.display();
 		this.popMatrix();
 
@@ -184,26 +155,19 @@ class LightingScene extends CGFscene
 		this.pushMatrix();
 			this.translate(7.5, 4, 0);
 			this.scale(15, 8, 0.2);
-			this.materialWood.apply();
 			this.wall.display();
 		this.popMatrix();
 
 		// First Table
 		this.pushMatrix();
 			this.translate(5, 0, 8);
-			this.materialWood.apply();
-			this.table.displayTop();
-			this.materialMetal.apply();
-			this.table.displayLegs();
+			this.table.display();
 		this.popMatrix();
 
 		// Second Table
 		this.pushMatrix();
 			this.translate(12, 0, 8);
-			this.materialWood.apply();
-			this.table.displayTop();
-			this.materialMetal.apply();
-			this.table.displayLegs();
+			this.table.display();
 		this.popMatrix();
 
 		// Board A
@@ -224,12 +188,30 @@ class LightingScene extends CGFscene
 			this.boardB.display();
 		this.popMatrix();
 
-		*/
 
-		// Prism
+
+		//Prism
+
 		this.pushMatrix();
-		    this.prism.display();
+		
+		this.rotate(90 * degToRad, 1, 0, 0);
+		this.scale(1,1,8);
+		this.translate(12,12,-1);
+
+		this.prism.display();
 		this.popMatrix();
+
+		//Cylinder
+
+		this.pushMatrix();
+
+		this.rotate(90 * degToRad, 1, 0, 0);
+		this.scale(1,1,8);
+		this.translate(7,12,-1);
+
+		this.cylinder.display();
+		this.popMatrix();
+
 
 		// ---- END Scene drawing section
 	};
