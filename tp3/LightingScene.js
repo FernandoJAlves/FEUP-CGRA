@@ -42,6 +42,7 @@ class LightingScene extends CGFscene
 
 		this.prism = new MyPrism(this, N_SLICES, N_STACKS);
 		this.cylinder = new MyCylinder(this, N_SLICES, N_STACKS);
+		this.halfsphere = new MyLamp(this, N_SLICES, N_STACKS);
 
 		// Materials
 		this.materialDefault = new CGFappearance(this);
@@ -134,6 +135,7 @@ class LightingScene extends CGFscene
 
 		// ---- BEGIN Scene drawing section
 
+/*
 
 		// Floor
 		this.pushMatrix();
@@ -210,6 +212,14 @@ class LightingScene extends CGFscene
 		this.translate(7,12,-1);
 
 		this.cylinder.display();
+		this.popMatrix();
+
+		*/
+
+		//Half sphere
+
+		this.pushMatrix();
+		this.halfsphere.display();
 		this.popMatrix();
 
 
