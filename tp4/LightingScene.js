@@ -85,7 +85,7 @@ class LightingScene extends CGFscene
 		this.tableAppearance.loadTexture("../resources/images/table.png");
 		this.floorAppearance.loadTexture("../resources/images/floor.png");
 		this.windowAppearance.loadTexture("../resources/images/window.png");
-		this.windowAppearance.setTextureWrap("CLAMP_TO_EDGE");
+		this.windowAppearance.setTextureWrap("CLAMP_TO_EDGE","CLAMP_TO_EDGE");
 
 
 		
@@ -114,6 +114,9 @@ class LightingScene extends CGFscene
 		this.lights[3].setPosition(4, 6.0, 5.0, 1.0);
 		this.lights[1].setVisible(true); // show marker on light position (different from enabled)
 
+        this.lights[4].setPosition(0,4,7.5);
+        this.lights[4].setVisible(true);
+
 		this.lights[0].setAmbient(0, 0, 0, 1);
 		this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
 		this.lights[0].setSpecular(1,1,0,1);
@@ -134,10 +137,18 @@ class LightingScene extends CGFscene
 		this.lights[3].setAmbient(0, 0, 0, 1);
 		this.lights[3].setDiffuse(1.0, 1.0, 1.0, 1.0);
 		this.lights[3].setSpecular(1,1,0,1);
-		this.lights[2].setLinearAttenuation(0);
-		this.lights[2].setQuadraticAttenuation(0.2);
-		this.lights[2].setConstantAttenuation(0);
+		this.lights[3].setLinearAttenuation(0);
+		this.lights[3].setQuadraticAttenuation(0.2);
+		this.lights[3].setConstantAttenuation(0);
 		this.lights[3].enable();
+
+		this.lights[4].setAmbient(0, 0, 0, 1);
+		this.lights[4].setDiffuse(1.0, 1.0, 1.0, 1.0);
+		this.lights[4].setSpecular(1,1,0,1);
+		this.lights[4].setLinearAttenuation(0);
+		this.lights[4].setQuadraticAttenuation(0.2);
+		this.lights[4].setConstantAttenuation(0);
+		this.lights[4].enable();
 	};
 
 	updateLights() 
@@ -195,6 +206,7 @@ class LightingScene extends CGFscene
 			this.materialWood.apply();
 			this.windowAppearance.apply();
 			this.wall.display();
+			
 		this.popMatrix();
 
 		// Plane Wall

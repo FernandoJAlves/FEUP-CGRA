@@ -11,7 +11,6 @@ class MyQuad extends CGFobject
 		this.maxS = maxS || 1;
 		this.minT = minT || 0;
 		this.maxT = maxT || 1;
-		console.log(this);
 		this.initBuffers();
 	};
 
@@ -34,6 +33,13 @@ class MyQuad extends CGFobject
 		this.indices = [
 		0, 1, 2, 
 		3, 2, 1
+		];
+
+		this.normals = [
+       	0, 0, 1,
+		0, 0, 1,
+		0, 0, 1,
+		0, 0, 1
 		];
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
