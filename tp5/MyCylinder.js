@@ -22,7 +22,7 @@ class MyCylinder extends CGFobject
 		this.vertices = [];
 		this.indices = [];
 		this.normals = [];
-		this.texCoords = [];
+		//this.texCoords = [];
 		var tex = 1;
 
 		//pontos e indices das faces laterais
@@ -69,13 +69,13 @@ class MyCylinder extends CGFobject
 		//tampa z = 1
 		this.vertices.push(0,0,1);
 
-		this.texCoords.push(tex/2,tex/2);
+		//this.texCoords.push(tex/2,tex/2);
 		this.normals.push(0,0,1);
 		for (var i = 0; i < this.slices; i++) {
     		this.vertices.push(Math.cos(i*ang),Math.sin(i*ang),1);
     		this.vertices.push(Math.cos((i+1)*ang),Math.sin((i+1)*ang),1);
-    		this.texCoords.push((Math.cos(i*ang)+tex)/2,(Math.sin(i*ang)+tex)/2);
-    		this.texCoords.push((Math.cos((i+1)*ang)+tex)/2,(Math.sin((i+1)*ang)+tex)/2);
+    		//this.texCoords.push((Math.cos(i*ang)+tex)/2,(Math.sin(i*ang)+tex)/2);
+    		//this.texCoords.push((Math.cos((i+1)*ang)+tex)/2,(Math.sin((i+1)*ang)+tex)/2);
     		this.indices.push((this.slices * (this.stacks + 1) ) + 1 + (2*this.slices) + 1,(this.slices * (this.stacks + 1) ) + 1 + (2*this.slices) + 1 + (2*i),(this.slices * (this.stacks + 1) ) + 1 + (2*this.slices) + 1 + 1 + (2*i));
     		this.normals.push(0,0,1);
     		this.normals.push(0,0,1);

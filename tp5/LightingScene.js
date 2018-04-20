@@ -42,8 +42,8 @@ class LightingScene extends CGFscene
 		this.prism = new MyPrism(this,N_SLICES,N_STACKS);
 		this.clock = new MyClock(this);
 		
-		this.boardA = new Plane(this, BOARD_A_DIVISIONS, 512, 512);
-		this.boardB = new Plane(this, BOARD_B_DIVISIONS, 512, 372);
+		this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25,1.25);
+		this.boardB = new Plane(this, BOARD_B_DIVISIONS);
 
 		// Materials
 		this.materialDefault = new CGFappearance(this);

@@ -2,7 +2,7 @@
 /** Represents a plane with nrDivs divisions along both axis, with center at (0,0) */
 class Plane extends CGFobject{
 
-	constructor(scene, nrDivs,xPix, yPix) 
+	constructor(scene, nrDivs, minS, maxS, minT, maxT) 
 	{
 		super(scene);
 
@@ -12,8 +12,10 @@ class Plane extends CGFobject{
 		this.nrDivs = nrDivs;
 		this.patchLength = 1.0 / nrDivs;
 
-		this.xPix = xPix;
-		this.yPix = yPix;
+		this.minS = minS || 0;
+		this.maxS = maxS || 1;
+		this.minT = minT || 0;
+		this.maxT = maxT || 1;
 
 		this.initBuffers();
 	};
@@ -43,36 +45,32 @@ class Plane extends CGFobject{
 		// Generate texture coordinates
 		this.texCoords = [];
 
-		var ratio = this.xPix/this.yPix;
+		var inc_S = (this.maxS - this.minS)/this.nrDivs;
+		var inc_T = (this.maxT - this.minT)/this.nrDivs;
 
-		var edge = (ratio - 1)/2;
-
+		
 		var yCoord = 0.5;
-		var yTex = 0;
 
-		for (var j = 0; j <= this.nrDivs; j++) 
-		{
+		for (var j = 0; j <= this.nrDivs; j++) {
 			var xCoord = -0.5;
-			var xTex = -edge;
 			for (var i = 0; i <= this.nrDivs; i++) 
 			{
 				this.vertices.push(xCoord, yCoord, 0);
-				
-				
+			
 				// As this plane is being drawn on the xy plane, the normal to the plane will be along the positive z axis.
 				// So all the vertices will have the same normal, (0, 0, 1).
 				
 				this.normals.push(0,0,1);
-
+	
 				// texCoords should be computed here; uncomment and fill the blanks
-				this.texCoords.push(xTex,yTex);
+				this.texCoords.push(this.minS+i*inc_S,this.minT+j*inc_T);
 
-				xTex += this.patchLength * ratio;
 				xCoord += this.patchLength;
 			}
-			yTex += this.patchLength;
 			yCoord -= this.patchLength;
-		}
+		}			
+
+
 		
 		// Generating indices
 		/* for nrDivs = 3 output will be 
