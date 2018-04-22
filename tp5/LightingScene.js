@@ -87,7 +87,6 @@ class LightingScene extends CGFscene
 		this.windowAppearance = new CGFappearance(this);
 		this.slidesAppearance = new CGFappearance(this);
 		this.boardAppearance = new CGFappearance(this);
-		this.clockAppearance = new CGFappearance(this);
 		this.tableAppearance.loadTexture("../resources/images/table.png");
 		this.floorAppearance.loadTexture("../resources/images/floor.png");
 		this.windowAppearance.loadTexture("../resources/images/window.png");
@@ -96,7 +95,6 @@ class LightingScene extends CGFscene
 		this.slidesAppearance.setTextureWrap("CLAMP_TO_EDGE","CLAMP_TO_EDGE");
 		this.boardAppearance.loadTexture("../resources/images/board.png");
 		this.boardAppearance.setTextureWrap("CLAMP_TO_EDGE","CLAMP_TO_EDGE");
-		this.clockAppearance.loadTexture("../resources/images/clock.png");
 		this.slidesAppearance.setSpecular(0.1,0.1,0.1,1);
 		this.slidesAppearance.setShininess(10);
 		this.slidesAppearance.setDiffuse(0.8,0.8,0.8,1);
@@ -105,9 +103,17 @@ class LightingScene extends CGFscene
 		this.boardAppearance.setShininess(80);
 		this.boardAppearance.setDiffuse(0.3,0.3,0.3,1);
 
-		//this.clockAppearance.setShininess(0);
+		//Clock
 
+		this.clockAppearance = new CGFappearance(this);
+		this.clockAppearance.loadTexture("../resources/images/clock.png");
 
+		this.clockHandAppearance = new CGFappearance(this);
+		//this.clockHandAppearance.setDiffuse(0,0,0,0);
+		//this.clockHandAppearance.setSpecular(0,0,0,0);
+
+		this.first_ite = 1;
+		this.setUpdatePeriod(100);
 		
 	};
 
@@ -172,6 +178,22 @@ class LightingScene extends CGFscene
 	{
 		for (var i = 0; i < this.lights.length; i++)
 			this.lights[i].update();
+	}
+
+	update(currTime){
+		
+		//Clock pointers
+
+		if(this.first_ite == 1){
+			this.last_time = currTime;
+			this.first_ite = 0;
+		}
+		if(this.first_ite == 0){
+			this.interval = currTime - this.last_time;
+			this.last_time = currTime;
+			this.clock.update(this.interval);
+		}
+
 	}
 
 

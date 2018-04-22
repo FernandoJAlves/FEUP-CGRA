@@ -9,14 +9,17 @@
 		super(scene);
 		this.ang = 0;
 		this.initBuffers();
-		this.scene.pushMatrix();
-		this.scene.scale(width,length,1);
-		this.scene.popMatrix();
-
+		this.length = length;
+		this.width = width;
+/*
+		scene.pushMatrix();
+		scene.scale(width,length,1);
+		scene.popMatrix();
+*/
 	};
 
 	setAngle(a){
-	    this.ang = -a * Math.PI/180.0;
+	    this.ang = a;
 	}
 
 	initBuffers(){
@@ -36,8 +39,10 @@
 
 	display() {
 		this.scene.pushMatrix();
-	    this.scene.rotate(this.ang,0,0,1);
-	    super.display();
+	    this.scene.rotate(-this.ang * Math.PI/180.0,0,0,1);
+		this.scene.scale(this.width,this.length,1);
+		super.display();
 	    this.scene.popMatrix();
+
 	};
  };
