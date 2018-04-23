@@ -19,9 +19,9 @@
 
 
 
-	    this.h.setAngle(90);
-	 	this.m.setAngle(180);
-	    this.s.setAngle(270);
+	    //this.h.setAngle(90);
+	 	//this.m.setAngle(180);
+	    //this.s.setAngle(270);
 
 	};
 

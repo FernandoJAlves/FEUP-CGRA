@@ -187,6 +187,7 @@ class LightingScene extends CGFscene
 		if(this.first_ite == 1){
 			this.last_time = currTime;
 			this.first_ite = 0;
+			this.clock.update(this.last_time);
 		}
 		if(this.first_ite == 0){
 			this.interval = currTime - this.last_time;
