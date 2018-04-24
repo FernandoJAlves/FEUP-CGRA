@@ -41,6 +41,7 @@ class LightingScene extends CGFscene
 		this.floor = new MyQuad(this,0,12,0,12);
 		this.prism = new MyPrism(this,N_SLICES,N_STACKS);
 		this.clock = new MyClock(this);
+		this.paper_plane = new MyPaperPlane(this,12,8);
 		
 		this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25,1.25);
 		this.boardB = new Plane(this, BOARD_B_DIVISIONS);
@@ -112,7 +113,18 @@ class LightingScene extends CGFscene
 		//this.clockHandAppearance.setDiffuse(0,0,0,0);
 		//this.clockHandAppearance.setSpecular(0,0,0,0);
 
-		this.first_ite = 1;
+		//Paper Plane
+
+		this.paper_planeAppearance = new CGFappearance(this);
+		this.paper_planeAppearance.setDiffuse(0.2,0.2,0.2,1);
+		this.paper_planeAppearance.setAmbient(0.5,0.5,0.5,1);
+		this.paper_planeAppearance.setSpecular(0.7,0.7,0.7,1);
+		this.paper_planeAppearance.setShininess(20);
+
+
+
+
+		
 		this.setUpdatePeriod(100);
 		
 	};
@@ -184,16 +196,13 @@ class LightingScene extends CGFscene
 		
 		//Clock pointers
 
-		if(this.first_ite == 1){
-			this.last_time = currTime;
-			this.first_ite = 0;
-			this.clock.update(this.last_time);
-		}
-		if(this.first_ite == 0){
-			this.interval = currTime - this.last_time;
-			this.last_time = currTime;
-			this.clock.update(this.interval);
-		}
+		this.clock.update(currTime);
+
+		//Paper plane
+
+		this.paper_plane.update(currTime);
+
+
 
 	}
 
@@ -305,13 +314,16 @@ class LightingScene extends CGFscene
 			this.clock.display();
 		this.popMatrix();
 
-
-		/*
-		// Prism
+		// Paper Plane
 		this.pushMatrix();
-		    this.prism.display();
+		this.translate(this.paper_plane.xPos, this.paper_plane.yPos, this.paper_plane.zPos);
+		this.rotate(-Math.PI/2,0,1,0);
+		this.paper_planeAppearance.apply();
+		
+		this.rotate(this.paper_plane.rot_z * degToRad,1,0,0);
+		this.paper_plane.display();    
 		this.popMatrix();
-		*/
+		
 
 		// ---- END Scene drawing section
 	};
