@@ -42,6 +42,7 @@ class LightingScene extends CGFscene
 		this.prism = new MyPrism(this,N_SLICES,N_STACKS);
 		this.clock = new MyClock(this);
 		this.paper_plane = new MyPaperPlane(this,12,8);
+		this.trap = new MyTrapezium(this,4,8);
 		
 		this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25,1.25);
 		this.boardB = new Plane(this, BOARD_B_DIVISIONS);
@@ -323,7 +324,6 @@ class LightingScene extends CGFscene
 		this.rotate(this.paper_plane.rot_z * degToRad,1,0,0);
 		this.paper_plane.display();    
 		this.popMatrix();
-		
 
 		// ---- END Scene drawing section
 	};
