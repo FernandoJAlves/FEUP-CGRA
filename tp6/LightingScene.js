@@ -43,6 +43,7 @@ class LightingScene extends CGFscene
 		this.clock = new MyClock(this);
 		this.paper_plane = new MyPaperPlane(this,12,8);
 		this.trap = new MyTrapezium(this,4,8);
+		this.vehicle = new MyVehicle(this,8,8);
 		
 		this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25,1.25);
 		this.boardB = new Plane(this, BOARD_B_DIVISIONS);
@@ -122,8 +123,21 @@ class LightingScene extends CGFscene
 		this.paper_planeAppearance.setSpecular(0.7,0.7,0.7,1);
 		this.paper_planeAppearance.setShininess(20);
 
+		//Vehicle
+		this.vehicleAppearance = new CGFappearance(this);
+		this.vehicleAppearance.setDiffuse(0,0.3,0,1);
+		this.vehicleAppearance.setSpecular(0,0,0,0);
+		this.vehicleAppearance.setShininess(1);
 
+		this.glassAppearance = new CGFappearance(this);
+		this.glassAppearance.setDiffuse(0,0,0.3,1);
+		this.glassAppearance.setSpecular(0.0,0,0.8,1);
+		this.glassAppearance.setShininess(1);
 
+		this.wheelAppearance = new CGFappearance(this);
+		this.wheelAppearance.setDiffuse(0,0,0,1);
+		this.wheelAppearance.setSpecular(0,0,0,0);
+		this.wheelAppearance.setShininess(1);
 
 		
 		this.setUpdatePeriod(100);
@@ -266,7 +280,7 @@ class LightingScene extends CGFscene
 			this.materialWood.apply();
 			this.plane.display();
 		this.popMatrix();
-
+/*
 		// First Table
 		this.pushMatrix();
 			this.translate(5, 0, 8);
@@ -286,7 +300,7 @@ class LightingScene extends CGFscene
 			this.materialMetal.apply();
 			this.table.displayLegs();
 		this.popMatrix();
-
+*/
 		// Board A
 		this.pushMatrix();
 			this.translate(4, 4.5, 0.2);
@@ -315,6 +329,16 @@ class LightingScene extends CGFscene
 			this.clock.display();
 		this.popMatrix();
 
+		//Vehicle
+		this.pushMatrix();
+			this.glassAppearance.apply();
+			this.vehicle.displayGlass();
+			this.vehicleAppearance.apply();
+			this.vehicle.displayBody();
+			this.wheelAppearance.apply();
+			this.vehicle.displayWheels();
+		this.popMatrix();
+/*
 		// Paper Plane
 		this.pushMatrix();
 		this.translate(this.paper_plane.xPos, this.paper_plane.yPos, this.paper_plane.zPos);
@@ -324,7 +348,7 @@ class LightingScene extends CGFscene
 		this.rotate(this.paper_plane.rot_z * degToRad,1,0,0);
 		this.paper_plane.display();    
 		this.popMatrix();
-
+*/
 		// ---- END Scene drawing section
 	};
 };
