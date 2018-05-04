@@ -68,4 +68,5 @@ class MyInterface extends CGFinterface {
 				console.log("Key 'A' pressed");
 		};
 	};
+
 };

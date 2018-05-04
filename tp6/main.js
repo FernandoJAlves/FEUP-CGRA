@@ -17,12 +17,13 @@ serialInclude([
 	'MyInterface.js',
 	'MyTrapezium.js',
 	'MyVehicle.js',
+	'MyTerrain.js',
 
 	main=function() {
 		var app = new CGFapplication(document.body);
 		var myScene = new LightingScene();
-		var myInterface = new CGFinterface();
-		//var myInterface = new MyInterface();
+		//var myInterface = new CGFinterface();
+		var myInterface = new MyInterface();
 
 		app.init();
 
