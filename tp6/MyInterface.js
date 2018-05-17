@@ -22,6 +22,7 @@ class MyInterface extends CGFinterface {
 
 		this.gui = new dat.GUI();
 
+
 		// add a button:
 		// the first parameter is the object that is being controlled (in this case the scene)
 		// the identifier 'doSomething' must be a function declared as part of that object (i.e. a member of the scene class)
@@ -60,13 +61,26 @@ class MyInterface extends CGFinterface {
 
 		// Check key codes e.g. here: http://www.asciitable.com/
 		// or use String.fromCharCode(event.keyCode) to compare chars
-
+		var key = event.which || event.keyCode; 
 		// for better cross-browser support, you may also check suggestions on using event.which in http://www.w3schools.com/jsref/event_key_keycode.asp
-		switch (event.keyCode)
-		{
-			case (65):	// only works for capital 'A', as it is
-				console.log("Key 'A' pressed");
-		};
+
+		if (key == 65 || key == 97){
+			//Turn Left
+			this.scene.vehicle.rotate(-0.003);
+		}
+	
+		else if (key == 68 ||key == 100)	{
+			this.scene.vehicle.rotate(0.003);
+		}
+		
+		if (key == 87 || key == 119){
+			this.scene.vehicle.move(-0.1);
+		}
+		
+		else if (key == 83 || key == 115)	{
+			this.scene.vehicle.move(0.1);
+		}
+
 	};
 
 };

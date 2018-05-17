@@ -10,6 +10,8 @@
 		this.x=x;
 		this.y=2;
 		this.z=z;
+		this.ang = 0;
+		this.speed = 0;
 		this.cube = new MyUnitCubeQuad(this.scene);
 		this.cylinder = new MyCylinder(this.scene,12,1);
 	};
@@ -71,5 +73,19 @@
 	    this.displayBody();
 
 	};
+
+	update(){
+
+	}
+
+	move(newSpeed){
+		this.speed = newSpeed;
+		this.x += this.speed * Math.cos(this.ang);
+		this.z += this.speed * Math.sin(this.ang);
+	}
+
+	rotate(ang){
+		this.ang += ang;
+	}
  };
 

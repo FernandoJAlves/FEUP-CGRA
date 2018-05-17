@@ -9,6 +9,8 @@ var BOARD_B_DIVISIONS = 100;
 var N_SLICES = 6;
 var N_STACKS = 6;
 
+var FPS = 60;
+
 class LightingScene extends CGFscene 
 {
 	constructor()
@@ -33,6 +35,10 @@ class LightingScene extends CGFscene
 		this.gl.depthFunc(this.gl.LEQUAL);
 
 		this.axis = new CGFaxis(this);
+
+		//GUI elements
+
+
 
 		// Scene elements
 
@@ -138,7 +144,7 @@ class LightingScene extends CGFscene
 		this.wheelAppearance.setShininess(1);
 
 		
-		this.setUpdatePeriod(100);
+		this.setUpdatePeriod(FPS);
 		
 	};
 
@@ -205,9 +211,10 @@ class LightingScene extends CGFscene
 			this.lights[i].update();
 	}
 
+
 	update(currTime){
 		
-
+		this.vehicle.update();
 
 	}
 
@@ -242,11 +249,11 @@ class LightingScene extends CGFscene
 		// ---- BEGIN Scene drawing section
 
 
-		// Floor
+		// terrain
 		this.pushMatrix();
 			this.translate(7.5, 0, 7.5);
 			this.rotate(-90 * degToRad, 1, 0, 0);
-			this.scale(15, 15, 0.2);
+			this.scale(50, 50, 0.2);
 			this.terrainAppearance.apply();
 			//this.materialFloor.apply();
 			this.terrain.display();
@@ -279,6 +286,7 @@ class LightingScene extends CGFscene
 
 		//Vehicle
 		this.pushMatrix();
+			this.rotate(this.vehicle.ang,0,1,0);
 			this.glassAppearance.apply();
 			this.vehicle.displayGlass();
 			this.vehicleAppearance.apply();
