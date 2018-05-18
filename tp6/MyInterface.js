@@ -66,18 +66,21 @@ class MyInterface extends CGFinterface {
 
 		if (key == 65 || key == 97){
 			//Turn Left
-			this.scene.vehicle.rotate(-0.003);
+			this.scene.vehicle.rotate(0.03);
 		}
 	
 		else if (key == 68 ||key == 100)	{
-			this.scene.vehicle.rotate(0.003);
+			//Turn Right
+			this.scene.vehicle.rotate(-0.03);
 		}
 		
 		if (key == 87 || key == 119){
+			//Move forward
 			this.scene.vehicle.move(-0.1);
 		}
 		
 		else if (key == 83 || key == 115)	{
+			//move backwards
 			this.scene.vehicle.move(0.1);
 		}
 

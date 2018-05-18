@@ -44,7 +44,7 @@ class LightingScene extends CGFscene
 
 		this.terrain = new MyTerrain(this,50,0,5,0,5);
 
-		this.vehicle = new MyVehicle(this,8,8);
+		this.vehicle = new MyVehicle(this,0,0);
 		
 		this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25,1.25);
 		this.boardB = new Plane(this, BOARD_B_DIVISIONS);
@@ -286,6 +286,8 @@ class LightingScene extends CGFscene
 
 		//Vehicle
 		this.pushMatrix();
+			
+			this.translate(this.vehicle.x,this.vehicle.y,this.vehicle.z);
 			this.rotate(this.vehicle.ang,0,1,0);
 			this.glassAppearance.apply();
 			this.vehicle.displayGlass();
