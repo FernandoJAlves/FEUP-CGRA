@@ -66,7 +66,7 @@ class LightingScene extends CGFscene
 
 		this.terrain = new MyTerrain(this,8,this.altimetry);
 
-		this.vehicle = new MyVehicle(this,30,30);
+		this.vehicle = new MyVehicle(this,15,15);
 
 		this.lastTime = 0;
 
@@ -277,7 +277,7 @@ class LightingScene extends CGFscene
 			this.glassAppearance.apply();
 			this.vehicle.displayGlass();
 			this.vehicleAppearances[this.currVehicleAppearance].apply();
-			//this.vehicle.displayBody();
+			this.vehicle.displayBody();
 			this.vehicle.displayWheels();
 		this.popMatrix();
 
