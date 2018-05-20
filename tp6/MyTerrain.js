@@ -4,28 +4,27 @@
  */
  class MyTerrain extends Plane
  {
-     constructor(scene, nrDivs, minS, maxS, minT, maxT){
-         super(scene, nrDivs, minS, maxS, minT, maxT);
+     constructor(scene, nrDivs, altimetry){
+         super(scene,nrDivs,0,5,0,5);
+         this.nrDivs = nrDivs;
+         this.altimetry = altimetry;
          this.initTerrain();
      }
 
      initTerrain(){
-         //example for nrDivs = 8 -> grid of 9x9 vertices
-         this.altimetry= [
-         [ 2.0 , 3.0 , 2.0, 4.0, 2.5, 2.4, 2.3, 1.3 ],
-         [ 2.0 , 3.0 , 2.0, 4.0, 7.5, 6.4, 4.3, 1.3 ],
-         [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
-         [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
-         [ 0.0 , 0.0 , 2.0, 4.0, 2.5, 2.4, 0.0, 0.0 ],
-         [ 0.0 , 0.0 , 2.0, 4.0, 3.5, 2.4, 0.0, 0.0 ],
-         [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
-         [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
-         [ 2.0 , 3.0 , 2.0, 1.0, 2.5, 2.4, 2.3, 1.3 ]
-         ];
+		for (var j = 0; j <= this.nrDivs; j++) {
+			for (var i = 0; i < this.nrDivs; i++) 
+			{
+				this.vertices[j*(this.nrDivs+1) + (i*3) + 2] = this.altimetry[j][i];
 
-     }
+			}
+		}
+		this.primitiveType = this.scene.gl.TRIANGLE_STRIP;
+		this.initGLBuffers();
+	}
 
-     display(){
-         super.display();
-     }
+	display(){
+		super.display();
+	}
+
  }

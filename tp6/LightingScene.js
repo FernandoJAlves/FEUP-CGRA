@@ -9,7 +9,7 @@ var BOARD_B_DIVISIONS = 100;
 var N_SLICES = 6;
 var N_STACKS = 6;
 
-var FPS = 60;
+var FPS = 1000/60;
 
 class LightingScene extends CGFscene 
 {
@@ -37,111 +37,81 @@ class LightingScene extends CGFscene
 		this.axis = new CGFaxis(this);
 
 		//GUI elements
-
-
+		this.drawAxis = true;
+		this.option1 = true;
+		this.option2 = false;
+		this.luz1 = true;
+		this.luz2 = true;
+		this.luz3 = true;
+		this.luz4 = true;
+		this.luz5 = true;
+		this.speed = 3;
+		this.Textura = "Black";
 
 		// Scene elements
 
-		this.terrain = new MyTerrain(this,50,0,5,0,5);
+		  //example for nrDivs = 8 -> grid of 9x9 vertices
+         this.altimetry= [
+         [ 2.0 , 3.0 , 2.0, 4.0, 2.5, 2.4, 2.3, 1.3 ],
+         [ 2.0 , 3.0 , 2.0, 4.0, 7.5, 6.4, 4.3, 1.3 ],
+         [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
+         [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
+         [ 0.0 , 0.0 , 2.0, 4.0, 2.5, 2.4, 0.0, 0.0 ],
+         [ 0.0 , 0.0 , 2.0, 4.0, 3.5, 2.4, 0.0, 0.0 ],
+         [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
+         [ 0.0 , 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ],
+         [ 2.0 , 3.0 , 2.0, 1.0, 2.5, 2.4, 2.3, 1.3 ]
+         ];
 
-		this.vehicle = new MyVehicle(this,0,0);
-		
-		this.boardA = new Plane(this, BOARD_A_DIVISIONS, -0.25,1.25);
-		this.boardB = new Plane(this, BOARD_B_DIVISIONS);
+
+		this.terrain = new MyTerrain(this,8,this.altimetry);
+
+		this.vehicle = new MyVehicle(this,30,30);
+
+		this.lastTime = 0;
 
 		// Materials
 		this.materialDefault = new CGFappearance(this);
-		
-		this.materialA = new CGFappearance(this);
-		this.materialA.setAmbient(0.3,0.3,0.3,1);
-		this.materialA.setDiffuse(0.6,0.6,0.6,1);
-		this.materialA.setSpecular(0,0.2,0.8,1);
-		this.materialA.setShininess(120);
-
-		this.materialB = new CGFappearance(this);
-		this.materialB.setAmbient(0.3,0.3,0.3,1);
-		this.materialB.setDiffuse(0.6,0.6,0.6,1);
-		this.materialB.setSpecular(0.8,0.8,0.8,1);	
-		this.materialB.setShininess(120);
-
-
-		this.materialWood = new CGFappearance(this);
-		this.materialWood.setAmbient(0.5,0.3,0,1);
-		this.materialWood.setDiffuse(0.4,0.2,0,1);
-		this.materialWood.setSpecular(0.5,0.3,0,0.5);	
-		this.materialWood.setShininess(120);
-
-		this.materialFloor = new CGFappearance(this);
-		this.materialFloor.setAmbient(0.2,0.2,0.2,1);
-		this.materialFloor.setDiffuse(0.4,0.4,0.4,1);
-		this.materialFloor.setSpecular(0.2,0.2,0.2,0.5);	
-		this.materialFloor.setShininess(120);
-
-		this.materialMetal = new CGFappearance(this);
-		this.materialMetal.setAmbient(0.2,0.2,0.2,1);
-		this.materialMetal.setDiffuse(0.2,0.2,0.2,1);
-		this.materialMetal.setSpecular(0.8,0.8,0.8,1);	
-		this.materialMetal.setShininess(120);
 
 
 
 		// Texture Objects Declaration
-		this.tableAppearance = new CGFappearance(this);
-		this.floorAppearance = new CGFappearance(this);
-		this.windowAppearance = new CGFappearance(this);
-		this.slidesAppearance = new CGFappearance(this);
-		this.boardAppearance = new CGFappearance(this);
+
 		this.terrainAppearance = new CGFappearance(this);
-		this.tableAppearance.loadTexture("../resources/images/table.png");
-		this.floorAppearance.loadTexture("../resources/images/floor.png");
-		this.windowAppearance.loadTexture("../resources/images/window.png");
-		this.windowAppearance.setTextureWrap("CLAMP_TO_EDGE","CLAMP_TO_EDGE");
-		this.slidesAppearance.loadTexture("../resources/images/slides.png");
-		this.slidesAppearance.setTextureWrap("CLAMP_TO_EDGE","CLAMP_TO_EDGE");
-		this.boardAppearance.loadTexture("../resources/images/board.png");
-		this.boardAppearance.setTextureWrap("CLAMP_TO_EDGE","CLAMP_TO_EDGE");
+
 
 		this.terrainAppearance.loadTexture("../resources/images/terrain.png");
-		this.slidesAppearance.setSpecular(0.1,0.1,0.1,1);
-		this.slidesAppearance.setShininess(10);
-		this.slidesAppearance.setDiffuse(0.8,0.8,0.8,1);
 
-		this.boardAppearance.setSpecular(0.5,0.5,0.5,1);
-		this.boardAppearance.setShininess(80);
-		this.boardAppearance.setDiffuse(0.3,0.3,0.3,1);
 
-		//Clock
-
-		this.clockAppearance = new CGFappearance(this);
-		this.clockAppearance.loadTexture("../resources/images/clock.png");
-
-		this.clockHandAppearance = new CGFappearance(this);
-		//this.clockHandAppearance.setDiffuse(0,0,0,0);
-		//this.clockHandAppearance.setSpecular(0,0,0,0);
-
-		//Paper Plane
-
-		this.paper_planeAppearance = new CGFappearance(this);
-		this.paper_planeAppearance.setDiffuse(0.2,0.2,0.2,1);
-		this.paper_planeAppearance.setAmbient(0.5,0.5,0.5,1);
-		this.paper_planeAppearance.setSpecular(0.7,0.7,0.7,1);
-		this.paper_planeAppearance.setShininess(20);
 
 		//Vehicle
-		this.vehicleAppearance = new CGFappearance(this);
-		this.vehicleAppearance.setDiffuse(0,0.3,0,1);
-		this.vehicleAppearance.setSpecular(0,0,0,0);
-		this.vehicleAppearance.setShininess(1);
+		this.vehicleAppearances = new Array();
+		this.vehicleAppearanceList = {};
+		this.vehicleAppearanceList["Black"] = 0;
+		this.vehicleAppearanceList["Militar"] = 1;
+		this.vehicleAppearanceList["Wood"] = 2;
+		this.currVehicleAppearance = 0;
+
+		this.vehicleAppearances[0] = new CGFappearance(this);
+		this.vehicleAppearances[0].loadTexture("../resources/images/black.png");
+
+		this.vehicleAppearances[1] = new CGFappearance(this);
+		this.vehicleAppearances[1].loadTexture("../resources/images/military.png");
+
+		this.vehicleAppearances[2] = new CGFappearance(this);
+		this.vehicleAppearances[2].loadTexture("../resources/images/floor.png");
+
 
 		this.glassAppearance = new CGFappearance(this);
-		this.glassAppearance.setDiffuse(0,0,0.3,1);
-		this.glassAppearance.setSpecular(0.0,0,0.8,1);
-		this.glassAppearance.setShininess(1);
+		this.glassAppearance.loadTexture("../resources/images/glass.png");
 
-		this.wheelAppearance = new CGFappearance(this);
-		this.wheelAppearance.setDiffuse(0,0,0,1);
-		this.wheelAppearance.setSpecular(0,0,0,0);
-		this.wheelAppearance.setShininess(1);
+		this.wheelSideAppearance = new CGFappearance(this);
+		this.wheelSideAppearance.loadTexture("../resources/images/car_wheel_side.png");
+		this.wheelSideAppearance.setTextureWrap("CLAMP_TO_EDGE","CLAMP_TO_EDGE");
+
+		this.wheelTrackAppearance = new CGFappearance(this);
+		this.wheelTrackAppearance.loadTexture("../resources/images/car_wheel_tracks.png");
+
 
 		
 		this.setUpdatePeriod(FPS);
@@ -150,7 +120,7 @@ class LightingScene extends CGFscene
 
 	initCameras() 
 	{
-		this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(30, 30, 30), vec3.fromValues(0, 0, 0));
+		this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(60, 60, 60), vec3.fromValues(0, 0, 0));
 	};
 
 	initLights() 
@@ -203,19 +173,57 @@ class LightingScene extends CGFscene
 		this.lights[4].setDiffuse(1.0, 1.0, 1.0, 1.0);
 		this.lights[4].setSpecular(1,1,0,1);
 		this.lights[4].enable();
+		
 	};
 
 	updateLights() 
 	{
+		if(this.luz1){
+			this.lights[0].enable();
+		}
+		else{
+			this.lights[0].disable();
+		}
+
+		if(this.luz2){
+			this.lights[1].enable();
+		}
+		else{
+			this.lights[1].disable();
+		}
+
+		if(this.luz3){
+			this.lights[2].enable();
+		}
+		else{
+			this.lights[2].disable();
+		}
+
+		if(this.luz4){
+			this.lights[3].enable();
+		}
+		else{
+			this.lights[3].disable();
+		}
+
+		if(this.luz5){
+			this.lights[4].enable();
+		}
+		else{
+			this.lights[4].disable();
+		}
+
 		for (var i = 0; i < this.lights.length; i++)
 			this.lights[i].update();
 	}
 
 
 	update(currTime){
-		
-		this.vehicle.update();
-
+		this.checkKeys();
+		var newTime = currTime;
+		var deltaTime = newTime - this.lastTime;
+		this.vehicle.update(deltaTime);
+		this.lastTime = newTime;
 	}
 
 
@@ -240,7 +248,9 @@ class LightingScene extends CGFscene
 		this.updateLights();
 
 		// Draw axis
+		if(this.drawAxis){
 		this.axis.display();
+		}
 
 		this.materialDefault.apply();
 
@@ -253,77 +263,77 @@ class LightingScene extends CGFscene
 		this.pushMatrix();
 			this.translate(7.5, 0, 7.5);
 			this.rotate(-90 * degToRad, 1, 0, 0);
-			this.scale(50, 50, 0.2);
+			this.scale(50, 50, 10);
 			this.terrainAppearance.apply();
-			//this.materialFloor.apply();
 			this.terrain.display();
 		this.popMatrix();
 
 
-/*
-		// First Table
-		this.pushMatrix();
-			this.translate(5, 0, 8);
-			this.tableAppearance.apply();
-			//this.materialWood.apply();
-			this.table.displayTop();
-			this.materialMetal.apply();
-			this.table.displayLegs();
-		this.popMatrix();
-
-		// Second Table
-		this.pushMatrix();
-			this.translate(12, 0, 8);
-			this.tableAppearance.apply();
-			//this.materialWood.apply();
-			this.table.displayTop();
-			this.materialMetal.apply();
-			this.table.displayLegs();
-		this.popMatrix();
-*/
-
-
-
 		//Vehicle
 		this.pushMatrix();
-			
+			this.currVehicleAppearance = this.vehicleAppearanceList[this.Textura];
 			this.translate(this.vehicle.x,this.vehicle.y,this.vehicle.z);
 			this.rotate(this.vehicle.ang,0,1,0);
 			this.glassAppearance.apply();
 			this.vehicle.displayGlass();
-			this.vehicleAppearance.apply();
-			this.vehicle.displayBody();
-			this.wheelAppearance.apply();
+			this.vehicleAppearances[this.currVehicleAppearance].apply();
+			//this.vehicle.displayBody();
 			this.vehicle.displayWheels();
 		this.popMatrix();
-/*
-		// Paper Plane
-		this.pushMatrix();
-		this.translate(this.paper_plane.xPos, this.paper_plane.yPos, this.paper_plane.zPos);
-		this.rotate(-Math.PI/2,0,1,0);
-		this.paper_planeAppearance.apply();
-		
-		this.rotate(this.paper_plane.rot_z * degToRad,1,0,0);
-		this.paper_plane.display();    
-		this.popMatrix();
-*/
+
 		// ---- END Scene drawing section
 	};
 
 	doSomething(){
-		
+		console.log("Doing something...");
 	}
 
-	option1(){
+	checkKeys(){
+		var text="Keys pressed: ";
+		var keysPressed=false;
+		var isRotating = false;
+		var angVel = 0.03;
+		if (this.gui.isKeyPressed("KeyW")){
+			this.vehicle.move(-this.speed);
+			keysPressed=true;
+		}
 
+		if (this.gui.isKeyPressed("KeyS")){
+			this.vehicle.move(this.speed);
+			keysPressed=true;
+		}
+
+		if (this.gui.isKeyPressed("KeyD")){
+			this.vehicle.rotateWheelsRight(angVel);
+			isRotating = true;
+		}
+
+		if (this.gui.isKeyPressed("KeyA")){
+			this.vehicle.rotateWheelsLeft(angVel);
+			
+			isRotating = true;
+		}
+
+		if(!isRotating){
+			this.vehicle.wheelsAng = 0;
+		}
+
+
+
+		if (keysPressed){
+			if (this.gui.isKeyPressed("KeyD")){
+				this.vehicle.rotate(-angVel);
+			}
+
+			if (this.gui.isKeyPressed("KeyA")){
+				this.vehicle.rotate(angVel);
+			}
+
+		}
+
+		else{
+			this.vehicle.move(0);
+		}
 	}
 
-
-	option2(){
-		
-	}
-
-	speed(){
-		
-	}
 };

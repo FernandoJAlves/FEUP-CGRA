@@ -56,6 +56,9 @@ class Plane extends CGFobject{
 			for (var i = 0; i <= this.nrDivs; i++) 
 			{
 				this.vertices.push(xCoord, yCoord, 0);
+				console.log("x2: " + xCoord);
+				console.log("y2: " + yCoord);
+				console.log("z2: " + 0);
 			
 				// As this plane is being drawn on the xy plane, the normal to the plane will be along the positive z axis.
 				// So all the vertices will have the same normal, (0, 0, 1).
