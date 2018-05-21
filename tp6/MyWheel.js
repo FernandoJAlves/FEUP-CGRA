@@ -17,6 +17,12 @@ class MyWheel extends CGFobject
    display() {
        this.scene.pushMatrix();
             this.scene.wheelSideAppearance.apply();
+            this.scene.rotate(Math.PI,0,1,0);
+            this.circle.display();
+       this.scene.popMatrix();
+
+       this.scene.pushMatrix();
+            this.scene.wheelSideAppearance.apply();
             this.circle.display();
             this.scene.wheelTrackAppearance.apply();
             this.cylinder.display();

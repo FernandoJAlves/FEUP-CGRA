@@ -87,14 +87,14 @@
 		this.scene.pushMatrix();
 			this.scene.translate(-1.25,-0.5,1);
 			this.scene.rotate(this.wheelsAng,0,1,0);
-			this.scene.rotate(this.wheelsAng2,0,0,1);
+			this.scene.rotate(-this.wheelsAng2,0,0,1);
 			this.scene.scale(WheelScale,WheelScale,WheelScale);
 			this.wheel.display();
 		this.scene.popMatrix();
 
 		this.scene.pushMatrix();
 			this.scene.translate(1.25,-0.5,1);
-			this.scene.rotate(this.wheelsAng2,0,0,1);
+			this.scene.rotate(-this.wheelsAng2,0,0,1);
 			this.scene.scale(WheelScale,WheelScale,WheelScale);
 			this.wheel.display();
 		this.scene.popMatrix();
@@ -154,9 +154,11 @@
 
 	update(deltaTime,terrain){
 		var time = deltaTime /1000;
-		this.wheelsAng2 = (this.wheelsAng2+this.speed*time) % (2*Math.PI);
+		
 		this.speed += this.accel*time;
 		let dist = (this.speed * time) + (this.accel * time * time / 2);
+		this.wheelsAng2 = (this.wheelsAng2+dist) % (2*Math.PI);
+		
 		let new_x = this.x + dist* Math.cos(this.ang);
 		let new_z = this.z + dist * -Math.sin(this.ang);
 		if(terrain.checkBorders(new_x,new_z)){
