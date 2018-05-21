@@ -31,23 +31,6 @@
 	       this.scene.scale(bodyLength,bodyHeight,bodyWidth);
 	       this.cube.display();
 	    this.scene.popMatrix();
-		
-		//left headlight
-		this.scene.pushMatrix();
-	       this.scene.translate(-bodyLength/2,0,bodyWidth - 1.7);
-	       this.scene.rotate(-Math.PI/2,0,1,0);
-	       this.scene.scale(0.2,0.2,0.2);
-	       this.headlight.display();
-	    this.scene.popMatrix();	
-		
-		//Right headlight
-	    this.scene.pushMatrix();
-	       this.scene.translate(-bodyLength/2,0,-bodyWidth + 1.7);
-	       this.scene.rotate(-Math.PI/2,0,1,0);
-	       this.scene.scale(0.2,0.2,0.2);
-	       this.headlight.display();
-	    this.scene.popMatrix();	
-
 
 	   this.scene.pushMatrix();
 	       this.scene.translate(0,0.6,0);
@@ -79,15 +62,28 @@
 	   	   this.sideGlass.display();
 	   this.scene.popMatrix();
 	    
-
-
+	    this.scene.glassAppearance.apply();
+		//left headlight
+		this.scene.pushMatrix();
+	       this.scene.translate(-bodyLength/2,0,bodyWidth - 1.7);
+	       this.scene.rotate(-Math.PI/2,0,1,0);
+	       this.scene.scale(0.05,0.05,0.05);
+	       this.headlight.display();
+	    this.scene.popMatrix();	
+		
+		//Right headlight
+	    this.scene.pushMatrix();
+	       this.scene.translate(-bodyLength/2,0,-bodyWidth + 1.7);
+	       this.scene.rotate(-Math.PI/2,0,1,0);
+	       this.scene.scale(0.1,0.1,0.1);
+	       this.headlight.display();
+	    this.scene.popMatrix();	
 
 	}
 
 	displayWheels(){
 		let WheelScale = 0.4;
 		this.scene.pushMatrix();
-			
 			this.scene.translate(-1.25,-0.5,1);
 			this.scene.rotate(this.wheelsAng,0,1,0);
 			this.scene.rotate(this.wheelsAng2,0,0,1);
