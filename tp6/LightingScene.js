@@ -281,6 +281,7 @@ class LightingScene extends CGFscene
 			this.vehicle.displayWheels();
 		this.popMatrix();
 
+
 		// ---- END Scene drawing section
 	};
 

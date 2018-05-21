@@ -18,6 +18,7 @@
 		this.wheel = new MyWheel(scene);
 		this.frontGlass = new MyTrapezium(this.scene,0,0,0,0,0.5,0,0.5);
 		this.sideGlass = new MyTrapezium(this.scene,0.0001,0.72,0.36);
+		this.headlight = new MyHalfSphere(this.scene, 12, 12);
 
 
 	};
@@ -30,6 +31,23 @@
 	       this.scene.scale(bodyLength,bodyHeight,bodyWidth);
 	       this.cube.display();
 	    this.scene.popMatrix();
+		
+		//left headlight
+		this.scene.pushMatrix();
+	       this.scene.translate(-bodyLength/2,0,bodyWidth - 1.7);
+	       this.scene.rotate(-Math.PI/2,0,1,0);
+	       this.scene.scale(0.2,0.2,0.2);
+	       this.headlight.display();
+	    this.scene.popMatrix();	
+		
+		//Right headlight
+	    this.scene.pushMatrix();
+	       this.scene.translate(-bodyLength/2,0,-bodyWidth + 1.7);
+	       this.scene.rotate(-Math.PI/2,0,1,0);
+	       this.scene.scale(0.2,0.2,0.2);
+	       this.headlight.display();
+	    this.scene.popMatrix();	
+
 
 	   this.scene.pushMatrix();
 	       this.scene.translate(0,0.6,0);
