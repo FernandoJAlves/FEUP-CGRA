@@ -45,7 +45,7 @@ class LightingScene extends CGFscene
 		this.luz3 = true;
 		this.luz4 = true;
 		this.luz5 = true;
-		this.speed = 3;
+		this.acceleration = 5;
 		this.Textura = "Black";
 
 		// Scene elements
@@ -66,7 +66,9 @@ class LightingScene extends CGFscene
 
 		this.terrain = new MyTerrain(this,8,this.altimetry);
 
-		this.vehicle = new MyVehicle(this,15,15);
+		this.vehicle = new MyVehicle(this,20,15);
+
+		this.crane = new MyCrane(this);
 
 		this.lastTime = 0;
 
@@ -222,7 +224,7 @@ class LightingScene extends CGFscene
 		this.checkKeys();
 		var newTime = currTime;
 		var deltaTime = newTime - this.lastTime;
-		this.vehicle.update(deltaTime);
+		this.vehicle.update(deltaTime,this.terrain);
 		this.lastTime = newTime;
 	}
 
@@ -261,7 +263,6 @@ class LightingScene extends CGFscene
 
 		// terrain
 		this.pushMatrix();
-			this.translate(7.5, 0, 7.5);
 			this.rotate(-90 * degToRad, 1, 0, 0);
 			this.scale(50, 50, 10);
 			this.terrainAppearance.apply();
@@ -285,8 +286,8 @@ class LightingScene extends CGFscene
 		// ---- END Scene drawing section
 	};
 
-	doSomething(){
-		console.log("Doing something...");
+	ativarGuindaste(){
+		this.crane.activateAnimation();
 	}
 
 	checkKeys(){
@@ -295,24 +296,30 @@ class LightingScene extends CGFscene
 		var isRotating = false;
 		var angVel = 0.03;
 		if (this.gui.isKeyPressed("KeyW")){
-			this.vehicle.move(-this.speed);
+			this.vehicle.move(-this.acceleration);
 			keysPressed=true;
 		}
 
 		if (this.gui.isKeyPressed("KeyS")){
-			this.vehicle.move(this.speed);
+			this.vehicle.move(this.acceleration);
 			keysPressed=true;
 		}
 
 		if (this.gui.isKeyPressed("KeyD")){
+			this.vehicle.rotate(-angVel);
 			this.vehicle.rotateWheelsRight(angVel);
 			isRotating = true;
 		}
 
 		if (this.gui.isKeyPressed("KeyA")){
+			this.vehicle.rotate(angVel);
 			this.vehicle.rotateWheelsLeft(angVel);
 			
 			isRotating = true;
+		}
+
+		if (this.gui.isKeyPressed("Space")){
+			this.vehicle.stop();
 		}
 
 		if(!isRotating){
@@ -322,13 +329,7 @@ class LightingScene extends CGFscene
 
 
 		if (keysPressed){
-			if (this.gui.isKeyPressed("KeyD")){
-				this.vehicle.rotate(-angVel);
-			}
 
-			if (this.gui.isKeyPressed("KeyA")){
-				this.vehicle.rotate(angVel);
-			}
 
 		}
 

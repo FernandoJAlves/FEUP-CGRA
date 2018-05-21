@@ -29,4 +29,31 @@
 		super.display();
 	}
 
+
+	checkBorders(x,y){
+		let limit = this.nrDivs + 1;
+		let dist = this.patchLength*50;
+
+		x+= 25;
+		y+= 25;
+
+		x /= dist;
+		y /= dist;
+
+		x = Math.floor(x);
+		y = Math.floor(y);
+
+		console.log("x: " + x);
+		console.log("y: " + y);
+
+		if(x <= 0 || y <= 0 || x >= limit || y >= limit){
+			return false;
+		}
+
+		if(this.altimetry[y][x] != 0){
+			return false;
+		}
+		return true;
+	}
+
  }

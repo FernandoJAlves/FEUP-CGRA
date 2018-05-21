@@ -14,6 +14,7 @@
 		this.wheelsAng = 0;
 		this.wheelsAng2 = 0;
 		this.speed = 0;
+		this.accel = 0;
 		this.cube = new MyUnitCubeQuad(this.scene,0,0.5,0,0.5);
 		this.wheel = new MyWheel(scene);
 		this.frontGlass = new MyTrapezium(this.scene,0,0,0,0,0.5,0,0.5);
@@ -151,16 +152,31 @@
 
 	};
 
-	update(deltaTime){
+	update(deltaTime,terrain){
 		var time = deltaTime /1000;
-		this.x += this.speed * time * Math.cos(this.ang);
-		this.z += this.speed * time * -Math.sin(this.ang);
-		this.wheelsAng2 = (this.wheelsAng2+this.speed) % (2*Math.PI);
+		this.wheelsAng2 = (this.wheelsAng2+this.speed*time) % (2*Math.PI);
+		this.speed += this.accel*time;
+		let dist = (this.speed * time) + (this.accel * time * time / 2);
+		let new_x = this.x + dist* Math.cos(this.ang);
+		let new_z = this.z + dist * -Math.sin(this.ang);
+		if(terrain.checkBorders(new_x,new_z)){
+			this.x = new_x;
+			this.z = new_z;
+		}
+		else{
+			this.stop();
+		}
+	
 	}
 
-	move(newSpeed){
-		this.speed = newSpeed;
+	move(newAccel){
+		this.accel = newAccel;
 
+	}
+
+	stop(){
+		this.accel = 0;
+		this.speed = 0;
 	}
 
 	rotate(ang){

@@ -14,7 +14,7 @@ class MyWheel extends CGFobject
    };
 
 
-   display(wheelAppearance,trackAppearance) {
+   display() {
        this.scene.pushMatrix();
             this.scene.wheelSideAppearance.apply();
             this.circle.display();
