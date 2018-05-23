@@ -43,8 +43,8 @@
 		x = Math.floor(x);
 		y = Math.floor(y);
 
-		console.log("x: " + x);
-		console.log("y: " + y);
+		//console.log("x: " + x);
+		//console.log("y: " + y);
 
 		if(x <= 0 || y <= 0 || x >= limit || y >= limit){
 			return false;

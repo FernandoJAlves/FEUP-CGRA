@@ -114,7 +114,11 @@ class LightingScene extends CGFscene
 		this.wheelTrackAppearance = new CGFappearance(this);
 		this.wheelTrackAppearance.loadTexture("../resources/images/car_wheel_tracks.png");
 
+		//Crane
 
+		this.metalAppearance = new CGFappearance(this);
+
+		this.metalAppearance.loadTexture("../resources/images/metal.png");
 		
 		this.setUpdatePeriod(FPS);
 		
@@ -282,6 +286,15 @@ class LightingScene extends CGFscene
 			this.vehicle.displayWheels();
 		this.popMatrix();
 
+		
+		//Crane
+		
+		this.pushMatrix();
+			this.translate(-12,2,-12);
+			this.metalAppearance.apply();
+			
+			this.crane.display();
+		this.popMatrix();
 
 		// ---- END Scene drawing section
 	};
@@ -294,7 +307,7 @@ class LightingScene extends CGFscene
 		var text="Keys pressed: ";
 		var keysPressed=false;
 		var isRotating = false;
-		var angVel = 0.03;
+		var angVel = -this.vehicle.speed/100.0;
 		if (this.gui.isKeyPressed("KeyW")){
 			this.vehicle.move(-this.acceleration);
 			keysPressed=true;
