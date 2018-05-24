@@ -197,5 +197,12 @@
 		this.wheelsAng += ang;
 		}
 	}
+
+
+	copyVehicle(vehicle){
+		this.ang = -vehicle.ang;
+		this.wheelsAng = vehicle.wheelsAng;
+		this.wheelsAng2 = vehicle.wheelsAng2;
+	}
  };
 

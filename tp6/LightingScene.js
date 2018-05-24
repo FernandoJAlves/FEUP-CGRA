@@ -229,6 +229,8 @@ class LightingScene extends CGFscene
 		var newTime = currTime;
 		var deltaTime = newTime - this.lastTime;
 		this.vehicle.update(deltaTime,this.terrain);
+		this.crane.catchVehicle(this.vehicle);
+		this.crane.update(deltaTime);
 		this.lastTime = newTime;
 	}
 
@@ -275,9 +277,11 @@ class LightingScene extends CGFscene
 
 
 		//Vehicle
+		if(this.crane.state == animationState.FINDING || this.crane.state == animationState.RETURNING){
 		this.pushMatrix();
 			this.currVehicleAppearance = this.vehicleAppearanceList[this.Textura];
 			this.translate(this.vehicle.x,this.vehicle.y,this.vehicle.z);
+			//console.log("x: " + this.vehicle.x + " z: " + this.vehicle.z);
 			this.rotate(this.vehicle.ang,0,1,0);
 			this.glassAppearance.apply();
 			this.vehicle.displayGlass();
@@ -285,12 +289,13 @@ class LightingScene extends CGFscene
 			this.vehicle.displayBody();
 			this.vehicle.displayWheels();
 		this.popMatrix();
+		}
 
 		
 		//Crane
 		
 		this.pushMatrix();
-			this.translate(-12,2,-12);
+			this.translate(this.crane.x,this.crane.y,this.crane.z);
 			this.metalAppearance.apply();
 			
 			this.crane.display();
@@ -301,6 +306,7 @@ class LightingScene extends CGFscene
 
 	ativarGuindaste(){
 		this.crane.activateAnimation();
+		this.crane.vehicle.copyVehicle(this.vehicle);
 	}
 
 	checkKeys(){
