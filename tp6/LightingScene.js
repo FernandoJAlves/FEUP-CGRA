@@ -310,6 +310,7 @@ class LightingScene extends CGFscene
 		var keysPressed=false;
 		var isRotating = false;
 		var angVel = -this.vehicle.speed/100.0;
+		let angVel2 = 0.03;
 		if (this.gui.isKeyPressed("KeyW")){
 			this.vehicle.move(-this.acceleration);
 			keysPressed=true;
@@ -321,34 +322,31 @@ class LightingScene extends CGFscene
 		}
 
 		if (this.gui.isKeyPressed("KeyD")){
+			
+			this.vehicle.rotateWheelsRight(angVel2);
 			this.vehicle.rotate(-angVel);
-			this.vehicle.rotateWheelsRight(angVel);
 			isRotating = true;
+		}
+		else{
+			this.vehicle.rotateRightToCenter(angVel2);
 		}
 
 		if (this.gui.isKeyPressed("KeyA")){
+			
+			this.vehicle.rotateWheelsLeft(angVel2);
 			this.vehicle.rotate(angVel);
-			this.vehicle.rotateWheelsLeft(angVel);
 			
 			isRotating = true;
+		}
+		else{
+			this.vehicle.rotateLeftToCenter(angVel2);
 		}
 
 		if (this.gui.isKeyPressed("Space")){
 			this.vehicle.stop();
 		}
-
-		if(!isRotating){
-			this.vehicle.wheelsAng = 0;
-		}
-
-
-
-		if (keysPressed){
-
-
-		}
-
-		else{
+		
+		if (!keysPressed){
 			this.vehicle.move(0);
 		}
 	}
