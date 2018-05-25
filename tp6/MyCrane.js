@@ -96,7 +96,7 @@ class MyCrane extends CGFobject
             this.scene.currVehicleAppearance = this.scene.vehicleAppearanceList[this.scene.Textura];
             this.scene.rotate(this.vehicle.ang,0,1,0);
             this.scene.rotate(Math.PI,1,0,0);
-            this.scene.translate(this.magnetX,-3-this.carHeight,this.magnetZ);
+            this.scene.translate(-this.magnetX,-3-this.carHeight,-this.magnetZ);
             this.scene.glassAppearance.apply();
             this.vehicle.displayGlass();
             this.scene.vehicleAppearances[this.scene.currVehicleAppearance].apply();
@@ -152,9 +152,9 @@ class MyCrane extends CGFobject
 
 
    catchVehicle(v2){
-       // -17.771182042096864 z: -6.240713266164828
-       let x = -17.77;
-       let z = -6.24;
+    //x: -17.691154799186137 z: -6.236271352788302
+       let x = -17.691154799186137;
+       let z = -6.236271352788302;
        let range = 1.3;
        if(v2.x > (x - range) && v2.x < (x + range) && v2.z > (z - range) && v2.z < (z + range)){
            this.vehicle.copyVehicle(v2);
@@ -219,6 +219,7 @@ class MyCrane extends CGFobject
 
         if(ready2 && ready1 && ready3){
             this.state = animationState.FALLING;
+            this.catchVehicle(this.scene.vehicle);
         }
 
    }
@@ -228,16 +229,17 @@ class MyCrane extends CGFobject
        let accel = 2;
        this.fallSpeed += time*accel;
        let dist = this.carHeight + this.fallSpeed*time + (accel*time*time)/2;
-       console.log(time);
-       console.log(this.fallSpeed);
-       console.log(dist);
        if(dist < 3){
            this.carHeight = dist;
        }
        else{
            this.fallSpeed = 0;
            this.carHeight = 0;
+           
+           this.scene.vehicle.setPosition(-3.134953140843954-this.magnetX,-9.765973839367277-this.magnetZ);
            this.state = animationState.RETURNING;
+           this.scene.vehicle.rotate(2*Math.PI/3);
+           
        }
 
    }

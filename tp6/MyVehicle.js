@@ -181,6 +181,11 @@
 		this.speed = 0;
 	}
 
+	setPosition(x,z){
+		this.x = x;
+		this.z = z;
+	}
+
 	rotate(ang){
 		this.ang += ang;
 	}
