@@ -28,9 +28,7 @@ class MyInterface extends CGFinterface {
 		// the identifier 'doSomething' must be a function declared as part of that object (i.e. a member of the scene class)
 		// e.g. LightingScene.prototype.doSomething = function () { console.log("Doing something..."); }; 
 
-		this.gui.add(this.scene, 'ativarGuindaste');
-
-		this.gui.add(this.scene,'drawAxis');	
+		this.gui.add(this.scene, 'CraneSpeed',0.1,1);	
 
 		// add a group of controls (and open/expand by defult)
 
@@ -40,7 +38,7 @@ class MyInterface extends CGFinterface {
 		// add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
 		// e.g. this.option1=true; this.option2=false;
 
-		group.add(this.scene, 'option1');
+		group.add(this.scene, 'drawAxis');
 		group.add(this.scene, 'option2');
 
 		var luzes = this.gui.addFolder("Luzes");

@@ -38,13 +38,13 @@ class LightingScene extends CGFscene
 
 		//GUI elements
 		this.drawAxis = true;
-		this.option1 = true;
 		this.option2 = false;
 		this.luz1 = true;
 		this.luz2 = true;
 		this.luz3 = true;
 		this.luz4 = true;
 		this.luz5 = true;
+		this.CraneSpeed = 0.1;
 		this.acceleration = 5;
 		this.Textura = "Black";
 
@@ -136,18 +136,19 @@ class LightingScene extends CGFscene
 
 
 		// Positions for four lights
-		this.lights[0].setPosition(4, 6, 1, 1);
+		this.lights[0].setPosition(25, 5, 25, 1);
 		this.lights[0].setVisible(true); // show marker on light position (different from enabled)
 		
-		this.lights[1].setPosition(10.5, 6.0, 1.0, 1.0);
+		this.lights[1].setPosition(25, 5, -25, 1.0);
 		this.lights[1].setVisible(true); // show marker on light position (different from enabled)
 
-		this.lights[2].setPosition(10.5,6.0,5.0,1.0);
-		this.lights[1].setVisible(true); // show marker on light position (different from enabled)
-		this.lights[3].setPosition(4, 6.0, 5.0, 1.0);
-		this.lights[1].setVisible(true); // show marker on light position (different from enabled)
+		this.lights[2].setPosition(-25,5,-25,1.0);
+		this.lights[2].setVisible(true); // show marker on light position (different from enabled)
+		
+		this.lights[3].setPosition(-25,5,25, 1.0);
+		this.lights[3].setVisible(true); // show marker on light position (different from enabled)
 
-        this.lights[4].setPosition(0.1,4,7.5,1.0);
+        this.lights[4].setPosition(0,10,0,1.0);
         this.lights[4].setVisible(true);
 
 		this.lights[0].setAmbient(0, 0, 0, 1);
@@ -303,11 +304,6 @@ class LightingScene extends CGFscene
 
 		// ---- END Scene drawing section
 	};
-
-	ativarGuindaste(){
-		this.crane.activateAnimation();
-		this.crane.vehicle.copyVehicle(this.vehicle);
-	}
 
 	checkKeys(){
 		var text="Keys pressed: ";

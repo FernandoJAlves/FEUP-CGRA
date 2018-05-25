@@ -68,7 +68,7 @@
 		this.scene.pushMatrix();
 	       this.scene.translate(-bodyLength/2,0,bodyWidth - 1.7);
 	       this.scene.rotate(-Math.PI/2,0,1,0);
-	       this.scene.scale(0.05,0.05,0.05);
+	       this.scene.scale(0.1,0.1,0.1);
 	       this.headlight.display();
 	    this.scene.popMatrix();	
 		

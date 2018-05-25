@@ -36,12 +36,6 @@ class MyCrane extends CGFobject
     this.magnetZ = 0;
    }
 
-   update(){
-       if(!this.animation){
-           return;
-       }
-   }
-
    display1() {
     this.scene.pushMatrix();
         this.scene.scale(2,2,2);
@@ -286,6 +280,8 @@ class MyCrane extends CGFobject
            return;
        }
 
+       this.updateSpeed();
+
        switch(this.state){
             case animationState.FINDING:
                 this.findingVehicleAnimation(deltaTime);
@@ -300,5 +296,10 @@ class MyCrane extends CGFobject
                 this.returningAnimation(deltaTime);
                 break;
        }
+   }
+
+
+   updateSpeed(){
+       this.angVel = this.scene.CraneSpeed;
    }
 };
