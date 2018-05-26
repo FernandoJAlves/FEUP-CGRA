@@ -153,7 +153,7 @@
 	};
 
 	update(deltaTime,terrain){
-		//this.updateRotation();
+		this.updateRotation();
 		var time = deltaTime /1000;
 		this.speed += this.accel*time;
 		let dist = (this.speed * time) + (this.accel * time * time / 2);
@@ -173,7 +173,6 @@
 
 	updateRotation(){
 		var angVel = -this.speed/100.0;
-		console.log(this.wheelsAng);
 		if(this.wheelsAng < 0){
 			this.rotate(-angVel);
 		}
@@ -204,26 +203,30 @@
 
 
 	rotateWheelsRight(ang){
+		
 		if(this.wheelsAng > -Math.PI/4.0){
-		this.wheelsAng -= ang;
+			this.wheelsAng -= ang;
 		}
 	}
 
 	rotateRightToCenter(ang){
+		
 		if(this.wheelsAng < 0){
 			this.wheelsAng += ang;
+			this.wheelsAng = Math.round(this.wheelsAng * 100) / 100;
 		}
 	}
 
 	rotateLeftToCenter(ang){
 		if(this.wheelsAng > 0){
 			this.wheelsAng -= ang;
+			this.wheelsAng = Math.round(this.wheelsAng * 100) / 100;
 		}
 	}
 
 	rotateWheelsLeft(ang){
 		if(this.wheelsAng < Math.PI/4.0){
-		this.wheelsAng += ang;
+			this.wheelsAng += ang;	
 		}
 	}
 

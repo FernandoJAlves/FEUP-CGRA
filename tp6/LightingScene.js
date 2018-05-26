@@ -37,7 +37,7 @@ class LightingScene extends CGFscene
 		this.axis = new CGFaxis(this);
 
 		//GUI elements
-		this.drawAxis = true;
+		this.drawAxis = false;
 		this.option2 = false;
 		this.luz1 = true;
 		this.luz2 = true;
@@ -137,19 +137,19 @@ class LightingScene extends CGFscene
 
 		// Positions for four lights
 		this.lights[0].setPosition(25, 5, 25, 1);
-		this.lights[0].setVisible(true); // show marker on light position (different from enabled)
+		//this.lights[0].setVisible(true); // show marker on light position (different from enabled)
 		
 		this.lights[1].setPosition(25, 5, -25, 1.0);
-		this.lights[1].setVisible(true); // show marker on light position (different from enabled)
+		//this.lights[1].setVisible(true); // show marker on light position (different from enabled)
 
 		this.lights[2].setPosition(-25,5,-25,1.0);
-		this.lights[2].setVisible(true); // show marker on light position (different from enabled)
+		//this.lights[2].setVisible(true); // show marker on light position (different from enabled)
 		
 		this.lights[3].setPosition(-25,5,25, 1.0);
-		this.lights[3].setVisible(true); // show marker on light position (different from enabled)
+		//this.lights[3].setVisible(true); // show marker on light position (different from enabled)
 
         this.lights[4].setPosition(0,10,0,1.0);
-        this.lights[4].setVisible(true);
+        //this.lights[4].setVisible(true);
 
 		this.lights[0].setAmbient(0, 0, 0, 1);
 		this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
@@ -282,7 +282,6 @@ class LightingScene extends CGFscene
 		this.pushMatrix();
 			this.currVehicleAppearance = this.vehicleAppearanceList[this.Textura];
 			this.translate(this.vehicle.x,this.vehicle.y,this.vehicle.z);
-			//console.log("x: " + this.vehicle.x + " z: " + this.vehicle.z);
 			this.rotate(this.vehicle.ang,0,1,0);
 			this.glassAppearance.apply();
 			this.vehicle.displayGlass();
@@ -324,7 +323,7 @@ class LightingScene extends CGFscene
 		if (this.gui.isKeyPressed("KeyD")){
 			
 			this.vehicle.rotateWheelsRight(angVel2);
-			this.vehicle.rotate(-angVel);
+			//this.vehicle.rotate(-angVel);
 			isRotating = true;
 		}
 		else{
@@ -334,7 +333,7 @@ class LightingScene extends CGFscene
 		if (this.gui.isKeyPressed("KeyA")){
 			
 			this.vehicle.rotateWheelsLeft(angVel2);
-			this.vehicle.rotate(angVel);
+			//this.vehicle.rotate(angVel);
 			
 			isRotating = true;
 		}
