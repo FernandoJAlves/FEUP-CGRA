@@ -124,13 +124,15 @@ class MyCrane extends CGFobject
     }
 
    displayCylinder(){
+       //Cylinder base
     this.scene.pushMatrix();
         this.scene.rotate(Math.PI,0,1,0);
         this.circle.display();
     this.scene.popMatrix();
-    
+    //Cylinder body
     this.cylinder.display();
     this.scene.translate(0,0,1);
+    //Cylinder top
     this.circle.display();
    };
 

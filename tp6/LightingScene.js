@@ -38,7 +38,6 @@ class LightingScene extends CGFscene
 
 		//GUI elements
 		this.drawAxis = false;
-		this.option2 = false;
 		this.luz1 = true;
 		this.luz2 = true;
 		this.luz3 = true;

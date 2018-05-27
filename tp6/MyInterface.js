@@ -33,7 +33,6 @@ class MyInterface extends CGFinterface {
 		// e.g. this.option1=true; this.option2=false;
 
 		group.add(this.scene, 'drawAxis');
-		group.add(this.scene, 'option2');
 
 		var luzes = this.gui.addFolder("Luzes");
 		luzes.open();
